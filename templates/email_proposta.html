@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Solicitação de Proposta</title>
+  <style>
+    body { font-family: Arial, sans-serif; color: #333; }
+    h1   { color: #005288; }
+    ul   { line-height: 1.4; }
+  </style>
+</head>
+<body>
+
+  <h1>Solicitação de Proposta</h1>
+
+  <p>Prezado(a) <strong>{fornecedor}</strong>,</p>
+
+  <p>
+    Estamos solicitando sua melhor cotação para o item abaixo:
+  </p>
+
+  <ul>
+    <li><strong>Categoria:</strong> {categoria}</li>
+    <li><strong>Material:</strong> {material}</li>
+    <li><strong>Quantidade:</strong> {quantidade}</li>
+    <li><strong>Especificação técnica:</strong> {especificacao}</li>
+    <li><strong>Prazo para envio da proposta:</strong> {prazo}</li>
+  </ul>
+
+  <p>
+    Por favor, responda a este e-mail anexando sua proposta comercial (PDF ou Excel) 
+    até a data limite indicada. 
+  </p>
+
+  <p>Desde já, obrigado pela atenção.</p>
+
+  <p>
+    Atenciosamente,<br/>
+    {remetente_email}
+  </p>
+
+</body>
+</html>
