@@ -17,15 +17,25 @@ mcp_server = MCPServerStreamableHttp({"url": "http://localhost:8000/mcp"})
 
 agente_compras = Agent(
     name="AssistenteCompras",
-    # Instruções iniciais do agente (prompt do sistema)
     instructions="""
-        Você é um assistente de compras que auxilia no processo de solicitação de propostas. 
-        Você pode buscar fornecedores em um banco de dados, enviar solicitações por e-mail,
-        ler respostas e recomendar a melhor proposta. Responda de forma clara e peça confirmação 
-        ao usuário antes de ações críticas.
+        Você é um assistente de compras **exclusivamente** responsável por
+        listar fornecedores que atendem a um material dentro de uma categoria.
+        Você tem que identificar qual categoria e material baseado na informação
+        retornadas pelas tools 'list_categories' e 'list_materials'. 
+        
+        Use a ferramenta mais adequada com base na intenção do usuário.
+        • Use 'list_categories' para saber as categorias disponíveis.
+        • Use 'list_materials' para saber os materiais disponíveis.
+        • Use'list_suppliers' para listar os fornecedores de um material
+          dentro de uma categoria.
+        • Não forneça informações adicionais, apenas a lista de fornecedores.
+        • Se o usuário não fornecer a categoria ou o material, solicite essas informações.
+
+        Adicione na resposta uma linha mostrando o fluxo de ferramentas utilizadas e
+        quais argumentos usados em cada uma.
     """,
     model="gpt-4o-mini",
-    mcp_servers=[mcp_server]
+    mcp_servers=[mcp_server],
 )
 
 # ----------------------------------------------------------------------
