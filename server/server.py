@@ -7,6 +7,10 @@ from pathlib import Path
 
 mcp = FastMCP("MCP Server")
 
+# --------------------------------------------------------------------------- #
+# Resource: lista fornecedores por categoria e material
+# --------------------------------------------------------------------------- #
+
 @mcp.resource("fornecedores://{category}/{material}")
 def listar_fornecedores(category: str, material: str):
     with session_scope() as session:
