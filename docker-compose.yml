@@ -28,7 +28,6 @@ services:
 volumes:
   postgres_data:
   pgadmin_data:
-  redis_data:
 
 networks:
   supply-net:

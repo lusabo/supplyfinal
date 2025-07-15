@@ -19,7 +19,7 @@ load_dotenv()
 
 GMAIL_ADDRESS = os.getenv("GMAIL_ADDRESS")
 GMAIL_PASSWORD = os.getenv("GMAIL_PASSWORD")
-TEMPLATE_PATH = Path(__file__).parent / "templates" / "email_proposta.html"
+TEMPLATE_PATH =  "../templates/email_proposta.html"
 
 # Initialize the FastMCP server
 mcp = FastMCP("Supply Chain Assistant")
@@ -85,6 +85,7 @@ def send_rfq_email(
         string confirming success or error
     """
     try:
+        print(f"Sending RFQ email to {recipient} for {fornecedor} - {categoria} - {material}")
         html_body = render_email_html(
             fornecedor=fornecedor,
             categoria=categoria,
@@ -104,13 +105,16 @@ def send_rfq_email(
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
             smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
             smtp.send_message(msg)
+            print(f"RFQ email sent successfully to {recipient}")
             
         return f"RFQ email sent successfully to {recipient}"
         
     except Exception as e:
+        print(f"Error sending RFQ email: {str(e)}")
         return f"Error sending email: {str(e)}"
 
 def render_email_html(**kwargs) -> str:
+    print(f"Rendering email HTML with placeholders: {kwargs}")
     """
     Read email template and replace placeholders with provided values.
     
@@ -125,14 +129,17 @@ def render_email_html(**kwargs) -> str:
     """
     try:
         # Read template file
-        html = TEMPLATE_PATH.read_text(encoding="utf-8")
+        with open(TEMPLATE_PATH, "r", encoding="utf-8") as file:
+            html = file.read()
         
         # Replace placeholders with values
         return html.format(**kwargs)
         
     except FileNotFoundError:
+        print(f"Template file not found at: {TEMPLATE_PATH}")
         raise ValueError(f"Email template not found at: {TEMPLATE_PATH}")
     except KeyError as e:
+        print(f"Missing required placeholder in template: {e}")
         raise ValueError(f"Missing required placeholder in template: {e}")
 
 @mcp.tool()

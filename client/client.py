@@ -85,13 +85,9 @@ async def responder_mcp(history: List[Dict]) -> str:
     """Processa a conversa completa pelo Supply Chain Agent."""
     try:
         await mcp_server.connect()
-        # O último item do histórico é a mensagem do usuário
-        user_message = history[-1]["content"]
-        # Passa todo o histórico menos a última mensagem como contexto
         result = await Runner.run(
             starting_agent=supply_agent,
-            input=user_message,
-            context=history[:-1]
+            input=history
         )
         return result.final_output
     except Exception as e:
